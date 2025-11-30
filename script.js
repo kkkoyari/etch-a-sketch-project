@@ -2,7 +2,7 @@ const container = document.querySelector('#container');
 
 function createGrid (size) {
 	while (container.firstChild) {
-        parent.removeChild(parent.firstChild);
+        container.removeChild(container.firstChild);
     }
 
 	gridCount = size * size;
