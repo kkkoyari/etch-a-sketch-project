@@ -8,7 +8,7 @@ function createGrid (size) {
 	gridCount = size * size;
 
 	const containerWidth = container.clientWidth;
-	const containerHeight = container.clientHeight;)
+	const containerHeight = container.clientHeight;
 	
 	const cellWidth = (containerWidth / size);
 	const cellHeight = (containerHeight / size);
