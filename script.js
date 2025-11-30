@@ -7,9 +7,8 @@ function createGrid (size) {
 
 	gridCount = size * size;
 
-	const containerSize = container.getBoundingClientRect();
-	const containerWidth = containerSize.width;
-	const containerHeight = containerSize.height;
+	const containerWidth = container.clientWidth;
+	const containerHeight = container.clientHeight;)
 	
 	const cellWidth = (containerWidth / size);
 	const cellHeight = (containerHeight / size);
@@ -20,7 +19,7 @@ function createGrid (size) {
 
 		cell.style.width = `${cellWidth}px`;
 		cell.style.height = `${cellHeight}px`;
-		cell.style.border = "1px solid #ccc";
+		cell.style.border = "0.1px solid #ccc";
 
 		container.appendChild(cell);
 	}
