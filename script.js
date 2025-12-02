@@ -5,7 +5,7 @@ function createGrid (size) {
         container.removeChild(container.firstChild);
     }
 
-	gridCount = size * size;
+	const gridCount = size * size;
 
 	const containerWidth = container.clientWidth;
 	const containerHeight = container.clientHeight;
@@ -19,9 +19,12 @@ function createGrid (size) {
 
 		cell.style.width = `${cellWidth}px`;
 		cell.style.height = `${cellHeight}px`;
-		cell.style.border = "0.1px solid #ccc";
 
 		container.appendChild(cell);
+
+		cell.addEventListener("mouseenter", () => {
+			cell.style.backgroundColor = "black";
+		});
 	}
 }
 
