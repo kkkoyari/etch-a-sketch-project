@@ -29,3 +29,20 @@ function createGrid (size) {
 }
 
 createGrid(16);
+
+const body = document.querySelector('body');
+const userInputText = document.createElement('p');
+userInputText.textContent = "Enter a grid size per side:"
+const userInput = document.createElement('input');
+const resizeButton = document.createElement('button');
+resizeButton.textContent = "Resize";
+
+body.insertBefore(userInput, container);
+body.insertBefore(userInputText, userInput);
+body.insertBefore(resizeButton, container);
+
+resizeButton.addEventListener("click", () => {
+	gridNumber = userInput.value;
+	userInput.value = '';
+	createGrid(gridNumber);
+});
