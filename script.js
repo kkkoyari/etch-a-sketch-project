@@ -1,4 +1,19 @@
 const container = document.querySelector('#container');
+const randomColoringText = document.querySelector('.random');
+const randomColorCheckbox = document.querySelector('input.random');
+
+const GRID_SIZE = 16;
+
+function setCellColor (cell, isChecked) {
+	if (isChecked) {
+		let rgb1 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+		let rgb2 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+		let rgb3 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
+		cell.style.backgroundColor = `rgb(${rgb1}, ${rgb2}, ${rgb3})`;
+	} else {
+		cell.style.backgroundColor = "black";
+	}
+}
 
 function createGrid (size) {
 	while (container.firstChild) {
@@ -23,12 +38,12 @@ function createGrid (size) {
 		container.appendChild(cell);
 
 		cell.addEventListener("mouseenter", () => {
-			cell.style.backgroundColor = "black";
+			setCellColor(cell, randomColorCheckbox.checked);
 		});
 	}
 }
 
-createGrid(16);
+createGrid(GRID_SIZE);
 
 const body = document.querySelector('body');
 const userControlPanel = document.createElement('div');
@@ -41,13 +56,13 @@ const userInput = document.createElement('input');
 const resizeButton = document.createElement('button');
 resizeButton.textContent = "Resize";
 
-body.insertBefore(userControlPanel, container);
+body.insertBefore(userControlPanel, randomColoringText);
 userControlPanel.appendChild(userInputText);
 userControlPanel.appendChild(userInput);
 userControlPanel.appendChild(resizeButton);
 
 resizeButton.addEventListener("click", () => {
-	gridNumber = userInput.value;
+	const gridNumber = userInput.value;
 	userInput.value = '';
 	createGrid(gridNumber);
 });
