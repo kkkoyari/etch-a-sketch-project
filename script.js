@@ -1,8 +1,21 @@
 const container = document.querySelector('#container');
 const randomColoringText = document.querySelector('.random');
 const randomColorCheckbox = document.querySelector('input.random');
+const shadowModeCheckbox = document.querySelector('input.shading');
 
 const GRID_SIZE = 16;
+
+shadowModeCheckbox.addEventListener ("click", () => {
+	if (shadowModeCheckbox.checked) {
+		randomColorCheckbox.checked = false;
+	}
+})
+
+randomColorCheckbox.addEventListener ("click", () => {
+	if (randomColorCheckbox.checked) {
+		shadowModeCheckbox.checked = false;
+	}
+})
 
 function setCellColor (cell, isChecked) {
 	if (isChecked) {
@@ -14,6 +27,19 @@ function setCellColor (cell, isChecked) {
 		cell.style.backgroundColor = "black";
 	}
 }
+
+// let currentOpacity = 0;
+
+// function setShadowMode (cell, isChecked) {
+// 	if (isChecked) {
+// 		currentOpacity =+ 0.1;
+// 		cell.style.backgroundColor = "rgb(0, 0, 0)";
+// 		cell.style.opacity = currentOpacity;
+// 		return currentOpacity;
+// 	} else {
+// 		cell.style.backgroundColor = "black";
+// 	}
+// }
 
 function createGrid (size) {
 	while (container.firstChild) {
@@ -39,6 +65,7 @@ function createGrid (size) {
 
 		cell.addEventListener("mouseenter", () => {
 			setCellColor(cell, randomColorCheckbox.checked);
+			// setShadowMode(cell, shadowModeCheckbox.checked);
 		});
 	}
 }
