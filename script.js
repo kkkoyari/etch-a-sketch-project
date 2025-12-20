@@ -17,29 +17,26 @@ randomColorCheckbox.addEventListener ("click", () => {
 	}
 })
 
-function setCellColor (cell, isChecked) {
-	if (isChecked) {
+function setCellColor (cell) {
+	if (randomColorCheckbox.checked) {
 		let rgb1 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		let rgb2 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		let rgb3 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		cell.style.backgroundColor = `rgb(${rgb1}, ${rgb2}, ${rgb3})`;
+
+	} else if (shadowModeCheckbox.checked) {
+		let cellOpacity = Number(cell.dataset.opacity);
+		let newCellOpacity = cellOpacity + 1;
+		
+		cell.dataset.opacity = String(newCellOpacity);
+		cell.style.backgroundColor = "black";
+		cell.style.opacity = newCellOpacity / 10 ;
+
 	} else {
 		cell.style.backgroundColor = "black";
+
 	}
 }
-
-// let currentOpacity = 0;
-
-// function setShadowMode (cell, isChecked) {
-// 	if (isChecked) {
-// 		currentOpacity =+ 0.1;
-// 		cell.style.backgroundColor = "rgb(0, 0, 0)";
-// 		cell.style.opacity = currentOpacity;
-// 		return currentOpacity;
-// 	} else {
-// 		cell.style.backgroundColor = "black";
-// 	}
-// }
 
 function createGrid (size) {
 	while (container.firstChild) {
@@ -57,6 +54,7 @@ function createGrid (size) {
 	for (let i = 0; i < gridCount; i++) {
 		const cell = document.createElement('div');
 		cell.classList.add("cell");
+		cell.dataset.opacity = "0";
 
 		cell.style.width = `${cellWidth}px`;
 		cell.style.height = `${cellHeight}px`;
@@ -64,8 +62,7 @@ function createGrid (size) {
 		container.appendChild(cell);
 
 		cell.addEventListener("mouseenter", () => {
-			setCellColor(cell, randomColorCheckbox.checked);
-			// setShadowMode(cell, shadowModeCheckbox.checked);
+			setCellColor(cell);
 		});
 	}
 }
