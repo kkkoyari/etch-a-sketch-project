@@ -79,6 +79,20 @@ randomColorCheckbox.addEventListener ("click", () => {
 	}
 })
 
+const erasorButton = document.createElement('input')
+erasorButton.setAttribute("type", "checkbox");
+colorControlPanel.appendChild(erasorButton);
+
+let erasorMode = false;
+
+erasorButton.addEventListener("change", () =>{
+	if (erasorButton.checked) {
+		erasorMode = true;
+	} else if (!erasorButton.checked) {
+		erasorMode = false;
+	}
+});
+
 let isDrawing = false;
 
 document.addEventListener("mousedown", () => {
@@ -90,14 +104,14 @@ document.addEventListener("mouseup", () => {
 });
 
 function setCellColor (cell) {
-	if (randomColorCheckbox.checked) {
+	if (randomColorCheckbox.checked && !erasorMode) {
 		let rgb1 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		let rgb2 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		let rgb3 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		cell.style.backgroundColor = `rgb(${rgb1}, ${rgb2}, ${rgb3})`;
 		// cell opacity should be added
 
-	} else if (shadowModeCheckbox.checked) {
+	} else if (shadowModeCheckbox.checked && !erasorMode) {
 		let cellOpacity = Number(cell.dataset.opacity);
 		let newCellOpacity = cellOpacity + 1;
 		// add a condiition here in order not to exceed opacity higher than 1
@@ -106,10 +120,12 @@ function setCellColor (cell) {
 		cell.style.backgroundColor = currentColor;
 		cell.style.opacity = newCellOpacity / 10 ;
 
-	} else {
+	} else if (!erasorMode) {
 		cell.style.opacity = 1;
 		cell.style.backgroundColor = currentColor;
 
+	} else if (erasorMode) {
+		cell.style.backgroundColor = "white";
 	}
 }
 
