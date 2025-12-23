@@ -27,10 +27,42 @@ userColorInput.setAttribute("type", "color");
 colorControlPanel.appendChild(userColorInput);
 body.appendChild(colorControlPanel);
 
-let currentColor = "black";
+const paletteContainer = document.createElement('div');
+paletteContainer.classList.add("palette");
+colorControlPanel.appendChild(paletteContainer);
 
-userColorInput.addEventListener("input", () => {
+let currentColor = "black";
+let recentColors = [];
+
+function renderPalette() {
+	while (paletteContainer.firstChild) {
+        paletteContainer.removeChild(paletteContainer.firstChild);
+    }
+	for (color of recentColors) {
+		let colorButton = document.createElement('button');
+		colorButton.classList.add("palette-item");
+		colorButton.style.backgroundColor = color;
+		colorButton.dataset.color = color;
+		paletteContainer.appendChild(colorButton);
+
+		colorButton.addEventListener("click", () => {
+			currentColor = colorButton.dataset.color;
+			userColorInput.value = colorButton.dataset.color;
+		})
+	}
+}
+
+userColorInput.addEventListener("change", () => {
 	currentColor = userColorInput.value;
+
+	if (!recentColors.includes(userColorInput.value)) {
+		recentColors.unshift(userColorInput.value);
+		console.log(recentColors);
+	}
+	if (recentColors.length >=10) {
+		recentColors.pop();
+	}
+	renderPalette();
 })
 
 const GRID_SIZE = 16;
@@ -63,10 +95,12 @@ function setCellColor (cell) {
 		let rgb2 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		let rgb3 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		cell.style.backgroundColor = `rgb(${rgb1}, ${rgb2}, ${rgb3})`;
+		// cell opacity should be added
 
 	} else if (shadowModeCheckbox.checked) {
 		let cellOpacity = Number(cell.dataset.opacity);
 		let newCellOpacity = cellOpacity + 1;
+		// add a condiition here in order not to exceed opacity higher than 1
 		
 		cell.dataset.opacity = String(newCellOpacity);
 		cell.style.backgroundColor = currentColor;
