@@ -17,6 +17,16 @@ randomColorCheckbox.addEventListener ("click", () => {
 	}
 })
 
+let isDrawing = false;
+
+document.addEventListener("mousedown", () => {
+	isDrawing = true;
+});
+
+document.addEventListener("mouseup", () => {
+	isDrawing = false;
+});
+
 function setCellColor (cell) {
 	if (randomColorCheckbox.checked) {
 		let rgb1 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
@@ -62,7 +72,9 @@ function createGrid (size) {
 		container.appendChild(cell);
 
 		cell.addEventListener("mouseenter", () => {
-			setCellColor(cell);
+			if (isDrawing) {
+				setCellColor(cell);
+			}	
 		});
 	}
 }
