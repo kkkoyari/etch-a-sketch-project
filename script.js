@@ -38,7 +38,7 @@ function renderPalette() {
 	while (paletteContainer.firstChild) {
         paletteContainer.removeChild(paletteContainer.firstChild);
     }
-	for (color of recentColors) {
+	for (const color of recentColors) {
 		let colorButton = document.createElement('button');
 		colorButton.classList.add("palette-item");
 		colorButton.style.backgroundColor = color;
@@ -59,7 +59,7 @@ userColorInput.addEventListener("change", () => {
 		recentColors.unshift(userColorInput.value);
 		console.log(recentColors);
 	}
-	if (recentColors.length >=10) {
+	if (recentColors.length >10) {
 		recentColors.pop();
 	}
 	renderPalette();
@@ -79,17 +79,17 @@ randomColorCheckbox.addEventListener ("click", () => {
 	}
 })
 
-const erasorButton = document.createElement('input')
-erasorButton.setAttribute("type", "checkbox");
-colorControlPanel.appendChild(erasorButton);
+const eraserButton = document.createElement('input')
+eraserButton.setAttribute("type", "checkbox");
+colorControlPanel.appendChild(eraserButton);
 
 let erasorMode = false;
 
-erasorButton.addEventListener("change", () =>{
-	if (erasorButton.checked) {
-		erasorMode = true;
-	} else if (!erasorButton.checked) {
-		erasorMode = false;
+eraserButton.addEventListener("change", () =>{
+	if (eraserButton.checked) {
+		eraserMode = true;
+	} else if (!eraserButton.checked) {
+		eraserMode = false;
 	}
 });
 
@@ -104,28 +104,33 @@ document.addEventListener("mouseup", () => {
 });
 
 function setCellColor (cell) {
-	if (randomColorCheckbox.checked && !erasorMode) {
+	if (randomColorCheckbox.checked && !eraserMode) {
 		let rgb1 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		let rgb2 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		let rgb3 = Math.floor(Math.random() * (255 - 0 + 1) + 0);
 		cell.style.backgroundColor = `rgb(${rgb1}, ${rgb2}, ${rgb3})`;
-		// cell opacity should be added
+		cell.style.opacity = 1;
+		cell.dataset.opacity = "0";
 
-	} else if (shadowModeCheckbox.checked && !erasorMode) {
+	} else if (shadowModeCheckbox.checked && !eraserMode) {
 		let cellOpacity = Number(cell.dataset.opacity);
-		let newCellOpacity = cellOpacity + 1;
-		// add a condiition here in order not to exceed opacity higher than 1
+		if (cellOpacity < 10) {
+			let newCellOpacity = cellOpacity + 1;
+			return newCellOpacity;
+		}
 		
 		cell.dataset.opacity = String(newCellOpacity);
 		cell.style.backgroundColor = currentColor;
 		cell.style.opacity = newCellOpacity / 10 ;
 
-	} else if (!erasorMode) {
+	} else if (!eraserMode) {
 		cell.style.opacity = 1;
 		cell.style.backgroundColor = currentColor;
 
-	} else if (erasorMode) {
+	} else if (eraserMode) {
 		cell.style.backgroundColor = "white";
+		cell.style.opacity = 1;
+		cell.dataset.opacity = "0";
 	}
 }
 
