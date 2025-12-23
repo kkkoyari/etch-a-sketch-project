@@ -1,7 +1,37 @@
 const container = document.querySelector('#container');
+
 const randomColoringText = document.querySelector('.random');
 const randomColorCheckbox = document.querySelector('input.random');
+
 const shadowModeCheckbox = document.querySelector('input.shading');
+
+const body = document.querySelector('body');
+const userControlPanel = document.createElement('div');
+
+const userInputText = document.createElement('p');
+userInputText.textContent = "Enter a grid size per side:"
+
+const userInput = document.createElement('input');
+
+const resizeButton = document.createElement('button');
+resizeButton.textContent = "Resize";
+
+body.insertBefore(userControlPanel, randomColoringText);
+userControlPanel.appendChild(userInputText);
+userControlPanel.appendChild(userInput);
+userControlPanel.appendChild(resizeButton);
+
+const colorControlPanel = document.createElement('div');
+const userColorInput = document.createElement('input')
+userColorInput.setAttribute("type", "color");
+colorControlPanel.appendChild(userColorInput);
+body.appendChild(colorControlPanel);
+
+let currentColor = "black";
+
+userColorInput.addEventListener("input", () => {
+	currentColor = userColorInput.value;
+})
 
 const GRID_SIZE = 16;
 
@@ -39,11 +69,12 @@ function setCellColor (cell) {
 		let newCellOpacity = cellOpacity + 1;
 		
 		cell.dataset.opacity = String(newCellOpacity);
-		cell.style.backgroundColor = "black";
+		cell.style.backgroundColor = currentColor;
 		cell.style.opacity = newCellOpacity / 10 ;
 
 	} else {
-		cell.style.backgroundColor = "black";
+		cell.style.opacity = 1;
+		cell.style.backgroundColor = currentColor;
 
 	}
 }
@@ -84,22 +115,6 @@ function createGrid (size) {
 }
 
 createGrid(GRID_SIZE);
-
-const body = document.querySelector('body');
-const userControlPanel = document.createElement('div');
-
-const userInputText = document.createElement('p');
-userInputText.textContent = "Enter a grid size per side:"
-
-const userInput = document.createElement('input');
-
-const resizeButton = document.createElement('button');
-resizeButton.textContent = "Resize";
-
-body.insertBefore(userControlPanel, randomColoringText);
-userControlPanel.appendChild(userInputText);
-userControlPanel.appendChild(userInput);
-userControlPanel.appendChild(resizeButton);
 
 resizeButton.addEventListener("click", () => {
 	const gridNumber = userInput.value;
