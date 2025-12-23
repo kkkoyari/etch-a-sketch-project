@@ -83,7 +83,7 @@ const eraserButton = document.createElement('input')
 eraserButton.setAttribute("type", "checkbox");
 colorControlPanel.appendChild(eraserButton);
 
-let erasorMode = false;
+let eraserMode = false;
 
 eraserButton.addEventListener("change", () =>{
 	if (eraserButton.checked) {
@@ -112,7 +112,7 @@ function setCellColor (cell) {
 		cell.style.opacity = 1;
 		cell.dataset.opacity = "0";
 
-	} else if (shadowModeCheckbox.checked && !eraserMode) {
+	} else if (shadowModeCheckbox.checked && eraserMode) {
 		let cellOpacity = Number(cell.dataset.opacity);
 		if (cellOpacity < 10) {
 			let newCellOpacity = cellOpacity + 1;
