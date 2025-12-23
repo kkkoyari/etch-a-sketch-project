@@ -76,6 +76,10 @@ function createGrid (size) {
 				setCellColor(cell);
 			}	
 		});
+
+		cell.addEventListener("click", () => {
+			setCellColor(cell);
+		});
 	}
 }
 
