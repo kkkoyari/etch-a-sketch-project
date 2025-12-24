@@ -1,12 +1,13 @@
 const container = document.querySelector('#container');
 
+const randomModePanel = document.querySelector('#random-mode')
 const randomColoringText = document.querySelector('.random');
 const randomColorCheckbox = document.querySelector('input.random');
 
 const shadowModeCheckbox = document.querySelector('input.shading');
 
 const body = document.querySelector('body');
-const userControlPanel = document.createElement('div');
+const userControlPanel = document.querySelector('#control-panel');
 
 const userInputText = document.createElement('p');
 userInputText.textContent = "Enter a grid size per side:"
@@ -16,10 +17,9 @@ const userInput = document.createElement('input');
 const resizeButton = document.createElement('button');
 resizeButton.textContent = "Resize";
 
-body.insertBefore(userControlPanel, randomColoringText);
-userControlPanel.appendChild(userInputText);
-userControlPanel.appendChild(userInput);
-userControlPanel.appendChild(resizeButton);
+userControlPanel.insertBefore(resizeButton, randomModePanel);
+userControlPanel.insertBefore(userInput, resizeButton);
+userControlPanel.insertBefore(userInputText, userInput);
 
 const colorControlPanel = document.createElement('div');
 const userColorInput = document.createElement('input')
@@ -112,16 +112,18 @@ function setCellColor (cell) {
 		cell.style.opacity = 1;
 		cell.dataset.opacity = "0";
 
-	} else if (shadowModeCheckbox.checked && eraserMode) {
+	} else if (shadowModeCheckbox.checked && !eraserMode) {
 		let cellOpacity = Number(cell.dataset.opacity);
 		if (cellOpacity < 10) {
 			let newCellOpacity = cellOpacity + 1;
-			return newCellOpacity;
+			cell.dataset.opacity = String(newCellOpacity);
+			cell.style.backgroundColor = currentColor;
+			cell.style.opacity = newCellOpacity / 10 ;
+		} else {
+			cell.dataset.opacity = String(cellOpacity);
+			cell.style.backgroundColor = currentColor;
+			cell.style.opacity = cellOpacity / 10 ;
 		}
-		
-		cell.dataset.opacity = String(newCellOpacity);
-		cell.style.backgroundColor = currentColor;
-		cell.style.opacity = newCellOpacity / 10 ;
 
 	} else if (!eraserMode) {
 		cell.style.opacity = 1;
