@@ -48,6 +48,7 @@ function renderPalette() {
 		colorButton.addEventListener("click", () => {
 			currentColor = colorButton.dataset.color;
 			userColorInput.value = colorButton.dataset.color;
+			randomColorCheckbox.checked = false;
 		})
 	}
 }
