@@ -13,17 +13,21 @@ const userInputText = document.createElement('p');
 userInputText.textContent = "Enter a grid size per side:"
 
 const userInput = document.createElement('input');
+userInput.setAttribute("class", "grid-input");
 
 const resizeButton = document.createElement('button');
 resizeButton.textContent = "Resize";
+resizeButton.setAttribute("class", "resize-button");
 
 userControlPanel.insertBefore(resizeButton, randomModePanel);
 userControlPanel.insertBefore(userInput, resizeButton);
 userControlPanel.insertBefore(userInputText, userInput);
 
 const colorControlPanel = document.createElement('div');
+colorControlPanel.setAttribute("id", "color-panel");
 const userColorInput = document.createElement('input')
 userColorInput.setAttribute("type", "color");
+userColorInput.setAttribute("class", "color-picker");
 colorControlPanel.appendChild(userColorInput);
 body.appendChild(colorControlPanel);
 
@@ -80,9 +84,14 @@ randomColorCheckbox.addEventListener ("click", () => {
 	}
 })
 
+const eraserWrapper = document.createElement('label');
+eraserWrapper.classList.add('eraser-button');
+
 const eraserButton = document.createElement('input')
 eraserButton.setAttribute("type", "checkbox");
-colorControlPanel.appendChild(eraserButton);
+eraserButton.setAttribute("class", "eraser");
+eraserWrapper.appendChild(eraserButton);
+colorControlPanel.appendChild(eraserWrapper);
 
 let eraserMode = false;
 
