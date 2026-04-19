@@ -53,12 +53,16 @@ function renderPalette() {
 			currentColor = colorButton.dataset.color;
 			userColorInput.value = colorButton.dataset.color;
 			randomColorCheckbox.checked = false;
+			eraserButton.checked = false;
+			eraserMode = false;
 		})
 	}
 }
 
 userColorInput.addEventListener("change", () => {
 	currentColor = userColorInput.value;
+	eraserButton.checked = false;
+	eraserMode = false;
 
 	if (!recentColors.includes(userColorInput.value)) {
 		recentColors.unshift(userColorInput.value);
